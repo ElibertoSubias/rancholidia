@@ -1,16 +1,12 @@
 import React from 'react';
 import { StyleSheet, Image, Text, TextInput, View, FlatList } from 'react-native';
 
-const NewItem = ({route}) => {
+const NewItem = () => {
     return ( 
         <View style={{ flex: 1, marginTop: 15}}>
-            <Text style={styles.title}>Modificar registro</Text>
+            <Text style={styles.title}>Agregar Ganado</Text>
             <View style={styles.contenedorIcono}>
-                <TextInput 
-                    style={styles.styleInput} 
-                    placeholder="Num. sinniga"
-                    value={route.params.item.numSinniga}
-                />
+                <TextInput style={styles.styleInput} placeholder="Num. sinniga"/>
             </View>
             <View style={styles.cuentaActualContent}>
                 <Text 

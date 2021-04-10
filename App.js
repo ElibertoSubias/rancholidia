@@ -3,8 +3,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Asset } from 'expo-asset';
 import AppNavigator from './src/navigations/Navigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import Home from './src/screens/Home';
+import { FirstScreenNavigation } from './CustomNavigation';
+import NewItem from './src/screens/NewItem';
+import ListItem from './src/screens/ListItem';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 export default class App extends React.Component {
   state = {
@@ -24,12 +32,58 @@ export default class App extends React.Component {
   }
 
   render (){
+
+    const Tab = createBottomTabNavigator();
+
     return (
-      (this.state.isFontLoaded === true) ? (<AppNavigator/>):(<AppLoading
-        startAsync={this._cacheResourcesAsync}
-        onFinish={() => this.setState({ isReady: true })}
-        onError={console.warn}
-      />)
+      (this.state.isFontLoaded === true) 
+      ? 
+      (
+        // <AppNavigator/>
+        <>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === 'Home') {
+                        iconName = focused
+                        ? 'ios-home'
+                        : 'ios-home-outline';
+                    } else if (route.name === 'NewItem') {
+                        iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
+                    } else if (route.name === 'ListItem') {
+                        iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
+                    } 
+                    // else if (route.name === 'Settings') {
+                    //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
+                    // }
+
+                    // You can return any component that you like here!
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                })}
+                tabBarOptions={{
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+              }}
+            >
+              <Tab.Screen name="Home" component={Home}/>
+              <Tab.Screen name="NewItem" component={NewItem} />
+              <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </>
+      )
+      :
+      (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      )
     );
   }
 
