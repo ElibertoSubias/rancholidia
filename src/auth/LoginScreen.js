@@ -44,7 +44,7 @@ if (Platform.OS !== 'web') {
                     <SvgCss xml={xml} width="80%" height="100%" style={styles.logo}/>
                 </View>) 
                 : <Image style={imageStyle} source={require('../images/logo.png')}/>}
-                <Text style={styles.title}>Inicio de Sesión</Text>
+                <Text style={styles.title}>Inicio de Sesión Tab</Text>
                 <Text style={styles.description}>
                     Familia Subias Ortega criando las mejores reces desde 1994
                 </Text>

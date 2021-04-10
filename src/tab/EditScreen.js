@@ -1,72 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Image, Text, TextInput, View, FlatList, SafeAreaView } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
+import {CustomHeader} from '../';
 
-function CustomHeader() {
-    return (
-        <View style={{flexDirection: 'row', height: 50, borderWidth: 1, borderColor: 'red'}}>
-            <View style={{flex: 1, justifyContent: 'center', borderColor: 'red', borderWidth: 1}}>
-                <Icon name="menufold" color="#00716F" size={24}/>
-            </View>
-            <View style={{flex: 1.5, justifyContent: 'center', borderColor: 'red', borderWidth: 1}}>
-                <Text style={{textAlign: 'center'}}>
-                    Title
-                </Text>
-            </View>
-            <View style={{flex: 1, borderColor: 'red', borderWidth: 1}}></View>
-        </View>
-    )
-}
-
-const NewItem = () => {
-    return ( 
-        <SafeAreaView>
-            <CustomHeader/>
-            <View style={{ flex: 1, marginTop: 15}}>
-                <Text style={styles.title}>Agregar Ganadow</Text>
-                <View style={styles.contenedorIcono}>
-                    <TextInput style={styles.styleInput} placeholder="Num. sinniga"/>
-                </View>
-                <View style={styles.cuentaActualContent}>
-                    <Text 
-                        style={styles.cuentaActualText}
-                        onPress={()=>navigation.navigate('Main')}
-                    >
-                        Escanear Núm. Sinniga
-                    </Text>
-                </View>
-                <View style={{height: '30%', justifyContent: 'center', alignItems: 'center', marginTop: 30,}}>
-                    <View style={{height: '100%', width: '70%'}}>
-                        <Image style={styles.imagen} source={require('../images/icon_image.jpg')}/>
+export class EditScreen extends Component {
+    render() {
+        return ( 
+            <SafeAreaView>
+                {/* <CustomHeader title='New Item' isHome={true} navigation={this.props.navigation}/> */}
+                <View style={{ flex: 1, marginTop: 15}}>
+                    <Text style={styles.title}>Modificar registro</Text>
+                    <View style={styles.contenedorIcono}>
+                        <TextInput 
+                            style={styles.styleInput} 
+                            placeholder="Num. sinniga"
+                            value={this.props.route.params.item.numSinniga}
+                        />
+                    </View>
+                    <View style={styles.cuentaActualContent}>
+                        <Text 
+                            style={styles.cuentaActualText}
+                            onPress={()=>navigation.navigate('Main')}
+                        >
+                            Escanear Núm. Sinniga
+                        </Text>
+                    </View>
+                    <View style={{height: '30%', justifyContent: 'center', alignItems: 'center', marginTop: 30,}}>
+                        <View style={{height: '100%', width: '70%'}}>
+                            <Image style={styles.imagen} source={require('../images/icon_image.jpg')}/>
+                        </View>
+                    </View>
+                    <View style={styles.cuentaActualContent}>
+                        <Text 
+                            style={styles.cuentaActualText}
+                            onPress={()=>navigation.navigate('Main')}
+                        >
+                            Buscar foto
+                        </Text>
+                    </View>
+                    <View style={styles.cuentaActualContent}>
+                        <Text 
+                            style={styles.cuentaActualText}
+                            onPress={()=>navigation.navigate('Main')}
+                        >
+                            Capturar foto
+                        </Text>
+                    </View>
+                    <View style={styles.cuentaActualContentGuardar}>
+                        <Text 
+                            style={styles.cuentaActualText}
+                            onPress={()=>navigation.navigate('Main')}
+                        >
+                            Guardar
+                        </Text>
                     </View>
                 </View>
-                <View style={styles.cuentaActualContent}>
-                    <Text 
-                        style={styles.cuentaActualText}
-                        onPress={()=>navigation.navigate('Main')}
-                    >
-                        Buscar foto
-                    </Text>
-                </View>
-                <View style={styles.cuentaActualContent}>
-                    <Text 
-                        style={styles.cuentaActualText}
-                        onPress={()=>navigation.navigate('Main')}
-                    >
-                        Capturar foto
-                    </Text>
-                </View>
-                <View style={styles.cuentaActualContentGuardar}>
-                    <Text 
-                        style={styles.cuentaActualText}
-                        onPress={()=>navigation.navigate('Main')}
-                    >
-                        Guardar
-                    </Text>
-                </View>
-            </View>
-        </SafeAreaView>
-    );
+            </SafeAreaView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -181,5 +172,3 @@ const styles = StyleSheet.create({
         opacity:0.4
     }
 });
- 
-export default NewItem;

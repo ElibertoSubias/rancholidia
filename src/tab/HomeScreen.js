@@ -8,7 +8,7 @@ export class HomeScreen extends Component {
             <SafeAreaView style={{flex: 1}}>
                 {/* <CustomHeader title='Home' isHome={true} navigation={this.props.navigation}/> */}
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <Text style={styles.myText}>Estoy en Home</Text>
+                    <Text style={styles.myText}>Estoy en Home Tab</Text>
                     <TouchableOpacity
                         style={{marginTop: 20}}
                     >

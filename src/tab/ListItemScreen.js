@@ -1,60 +1,54 @@
-import React, { Component } from 'react';
-import { StyleSheet, Image, Text, TextInput, View, FlatList, SafeAreaView } from 'react-native';
+import React, { Component, useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
-import {CustomHeader} from '../';
 
-export class NewItemScreen extends Component {
-    render() {
-        return ( 
-            <SafeAreaView>
-                {/* <CustomHeader title='New Item' isHome={true} navigation={this.props.navigation}/> */}
-                <View style={{ flex: 1, marginTop: 15}}>
-                    <Text style={styles.title}>Agregar Ganados</Text>
-                    <View style={styles.contenedorIcono}>
-                        <TextInput style={styles.styleInput} placeholder="Num. sinniga"/>
-                    </View>
-                    <View style={styles.cuentaActualContent}>
-                        <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
-                        >
-                            Escanear Núm. Sinniga
-                        </Text>
-                    </View>
-                    <View style={{height: '30%', justifyContent: 'center', alignItems: 'center', marginTop: 30,}}>
-                        <View style={{height: '100%', width: '70%'}}>
-                            <Image style={styles.imagen} source={require('../images/icon_image.jpg')}/>
+const ListItemScreen = ({navigation}) => {
+    const [item, setItem] = useState([
+        { numSinniga: '5151515151', edad: 2, sexo: 'H', uri: '../image/cow.jpg'},
+        { numSinniga: '1212121212', edad: 1, sexo: 'M', uri: '../image/cow.jpg'},
+        { numSinniga: '2121212121', edad: 5, sexo: 'H', uri: '../image/cow.jpg'},
+        { numSinniga: '1313131313', edad: 3, sexo: 'M', uri: '../image/cow.jpg'},
+        { numSinniga: '1414141414', edad: 4, sexo: 'H', uri: '../image/cow.jpg'},
+        { numSinniga: '1919191919', edad: 3, sexo: 'M', uri: '../image/cow.jpg'},
+    ]);
+    return (
+        <SafeAreaView>
+            <View  style={{ flex: 1, width: '100%', marginTop: 15}}>
+                <Text style={styles.title}>Listado</Text>
+                <FlatList 
+                    style={{width: '100%'}}
+                    keyExtractor={(item)=> item.numSinniga}
+                    // numColumns={2}
+                    data={item}
+                    renderItem={({ item }) => (
+                        <View style={styles.containerItem}>
+                            <Image style={styles.itemImage} source={require('../images/cow.jpg')}/>
+                            <View style={{height:150, width: '50%'}}>
+                                <View style={{ flex: 4}}>
+                                    <Text style={styles.itemTitle}>Num.: {item.numSinniga}</Text>
+                                    <Text style={styles.itemTitle}>Sexo: {item.sexo}</Text>
+                                    <Text style={styles.itemTitle}>Edad: {item.edad}</Text>
+                                </View>
+                                <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                    <Icon name="delete" color="#00716F" size={24} style={{marginLeft:15}}/>
+                                    <Icon 
+                                        name="edit" 
+                                        color="#00716F" 
+                                        size={24}
+                                        onPress={()=>navigation.navigate('Edit', {item})}
+                                    />
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.cuentaActualContent}>
-                        <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
-                        >
-                            Buscar foto
-                        </Text>
-                    </View>
-                    <View style={styles.cuentaActualContent}>
-                        <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
-                        >
-                            Capturar foto
-                        </Text>
-                    </View>
-                    <View style={styles.cuentaActualContentGuardar}>
-                        <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
-                        >
-                            Guardar
-                        </Text>
-                    </View>
-                </View>
-            </SafeAreaView>
-        );
-    }
+                    )}
+                />
+            </View>
+        </SafeAreaView>
+    )
 }
+
+export default ListItemScreen;
+
 
 const styles = StyleSheet.create({
     containerItem: {

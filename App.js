@@ -1,22 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Asset } from 'expo-asset';
-import AppNavigator from './src/navigations/Navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import Home from './src/screens/Home';
-import { FirstScreenNavigation } from './CustomNavigation';
-import NewItem from './src/screens/NewItem';
-import ListItem from './src/screens/ListItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {LoginScreen} from './src/auth';
 import {RegisterScreen} from './src/auth';
-import MainNavigation from './src/screens/MainNavigation';
-import { HomeScreen } from './src/tab';
+import { HomeScreen, NewItemScreen, EditScreen } from './src/tab';
+import ListItemScreen from './src/tab/ListItemScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +23,9 @@ const navOptionHandler = () => ({
 
 function HomeStack() {
   return(
-    <StackHome.Navigator initialRouteName="Home">
-      <StackHome.Screen options={navOptionHandler} name="Home" component={HomeScreen}/>
+    <StackHome.Navigator initialRouteName="ItemList">
+      <StackHome.Screen options={navOptionHandler} name="ItemList" component={ListItemScreen}/>
+      <StackHome.Screen options={{headerShown: true, title: 'Editar'}} name="Edit" component={EditScreen}/>
     </StackHome.Navigator>
   )
 }
@@ -49,12 +45,7 @@ function TabNavigation() {
               iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
           } else if (route.name === 'ListItem') {
               iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
-          } 
-          // else if (route.name === 'Settings') {
-          //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
-          // }
-
-          // You can return any component that you like here!
+          }
           return <Ionicons name={iconName} size={size} color={color} />;
       },
       })}
@@ -63,9 +54,9 @@ function TabNavigation() {
       inactiveTintColor: 'gray',
     }}
   >
-    <Tab.Screen name="Home" component={HomeStack}/>
-    <Tab.Screen name="NewItem" component={NewItem} />
-    <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
+    <Tab.Screen name="Home" component={HomeScreen}/>
+    <Tab.Screen name="NewItem" component={NewItemScreen} />
+    <Tab.Screen name="ListItem" component={HomeStack} />
   </Tab.Navigator>
   )
 }
@@ -101,70 +92,8 @@ export default class App extends React.Component {
             <StackApp.Screen options={navOptionHandler} name="HomeApp" component={TabNavigation}/>
               <StackApp.Screen options={navOptionHandler} name="Login" component={LoginScreen}/>
               <StackApp.Screen options={navOptionHandler} name="Register" component={RegisterScreen}/>
+              <StackApp.Screen options={navOptionHandler} name="Edit" component={EditScreen}/>
             </StackApp.Navigator>
-            {/* {1==1 ? 
-            (
-              <Tab.Navigator
-                screenOptions={({ route }) => ({
-                  tabBarIcon: ({ focused, color, size }) => {
-                      let iconName;
-
-                      if (route.name === 'Home') {
-                          iconName = focused
-                          ? 'ios-home'
-                          : 'ios-home-outline';
-                      } else if (route.name === 'NewItem') {
-                          iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
-                      } else if (route.name === 'ListItem') {
-                          iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
-                      } 
-                      // else if (route.name === 'Settings') {
-                      //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
-                      // }
-
-                      // You can return any component that you like here!
-                      return <Ionicons name={iconName} size={size} color={color} />;
-                  },
-                  })}
-                  tabBarOptions={{
-                  activeTintColor: 'tomato',
-                  inactiveTintColor: 'gray',
-                }}
-              >
-                <Tab.Screen name="Home" component={Home}/>
-                <Tab.Screen name="NewItem" component={NewItem} />
-                <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
-              </Tab.Navigator>
-            )
-            :
-            (
-              <StackApp.Navigator>
-                <StackApp.Screen 
-                  options={{
-                    title: "Login",
-                    headerShown: false
-                  }}
-                  name="Login" 
-                  component={Login} 
-                />
-                <StackApp.Screen 
-                  options={{
-                    title: "Register",
-                    headerShown: false
-                  }}
-                  name="Register" 
-                  component={Register} 
-                />
-                <StackApp.Screen 
-                  options={{
-                    title: "Home",
-                    headerShown: false
-                  }}
-                  name="MainNavigation" 
-                  component={MainNavigation} 
-                />
-              </StackApp.Navigator>
-            )} */}
           </NavigationContainer>
         </>
       )
