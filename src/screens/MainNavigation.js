@@ -24,7 +24,7 @@ function CapturarItem({navigation}) {
         <View style={styles.cuentaActualContent}>
             <Text 
                 style={styles.cuentaActualText}
-                onPress={()=>navigation.navigate('Main')}
+                onPress={()=>navigation.navigate('MainNavigation')}
             >
                 Escanear Núm. Sinniga
             </Text>
@@ -116,7 +116,7 @@ function SettingsScreen() {
 
 const Tab = createBottomTabNavigator();
 
-export default class Main extends React.Component{
+export default class MainNavigation extends React.Component{
     render() {
         const {navigate} = this.props.navigation;
         // https://oblador.github.io/react-native-vector-icons/

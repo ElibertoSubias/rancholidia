@@ -5,6 +5,7 @@ import { Asset } from 'expo-asset';
 import AppNavigator from './src/navigations/Navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import Home from './src/screens/Home';
@@ -12,7 +13,64 @@ import { FirstScreenNavigation } from './CustomNavigation';
 import NewItem from './src/screens/NewItem';
 import ListItem from './src/screens/ListItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {LoginScreen} from './src/auth';
+import {RegisterScreen} from './src/auth';
+import MainNavigation from './src/screens/MainNavigation';
+import { HomeScreen } from './src/tab';
 
+const Tab = createBottomTabNavigator();
+
+const StackHome = createStackNavigator();
+
+const navOptionHandler = () => ({
+  headerShown: false
+});
+
+function HomeStack() {
+  return(
+    <StackHome.Navigator initialRouteName="Home">
+      <StackHome.Screen options={navOptionHandler} name="Home" component={HomeScreen}/>
+    </StackHome.Navigator>
+  )
+}
+
+function TabNavigation() {
+  return (
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+              iconName = focused
+              ? 'ios-home'
+              : 'ios-home-outline';
+          } else if (route.name === 'NewItem') {
+              iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
+          } else if (route.name === 'ListItem') {
+              iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
+          } 
+          // else if (route.name === 'Settings') {
+          //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
+          // }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      })}
+      tabBarOptions={{
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeStack}/>
+    <Tab.Screen name="NewItem" component={NewItem} />
+    <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
+  </Tab.Navigator>
+  )
+}
+
+const StackApp = createStackNavigator();
 
 export default class App extends React.Component {
   state = {
@@ -29,50 +87,84 @@ export default class App extends React.Component {
       'Thin' : require('./src/fonts/NotoSansSC-Thin.otf')
     });
     this.setState({isFontLoaded:true})
-  }
+  }  
 
   render (){
-
-    const Tab = createBottomTabNavigator();
 
     return (
       (this.state.isFontLoaded === true) 
       ? 
       (
-        // <AppNavigator/>
         <>
-          <NavigationContainer>
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                    let iconName;
+          <NavigationContainer>  
+            <StackApp.Navigator initialRouteName="Login">
+            <StackApp.Screen options={navOptionHandler} name="HomeApp" component={TabNavigation}/>
+              <StackApp.Screen options={navOptionHandler} name="Login" component={LoginScreen}/>
+              <StackApp.Screen options={navOptionHandler} name="Register" component={RegisterScreen}/>
+            </StackApp.Navigator>
+            {/* {1==1 ? 
+            (
+              <Tab.Navigator
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                      let iconName;
 
-                    if (route.name === 'Home') {
-                        iconName = focused
-                        ? 'ios-home'
-                        : 'ios-home-outline';
-                    } else if (route.name === 'NewItem') {
-                        iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
-                    } else if (route.name === 'ListItem') {
-                        iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
-                    } 
-                    // else if (route.name === 'Settings') {
-                    //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
-                    // }
+                      if (route.name === 'Home') {
+                          iconName = focused
+                          ? 'ios-home'
+                          : 'ios-home-outline';
+                      } else if (route.name === 'NewItem') {
+                          iconName = focused ? 'md-add-circle' : 'md-add-circle-outline';
+                      } else if (route.name === 'ListItem') {
+                          iconName = focused ? 'md-list-circle' : 'md-list-circle-outline';
+                      } 
+                      // else if (route.name === 'Settings') {
+                      //     iconName = focused ? 'ios-settings' : 'ios-settings-outline';
+                      // }
 
-                    // You can return any component that you like here!
-                    return <Ionicons name={iconName} size={size} color={color} />;
-                },
-                })}
-                tabBarOptions={{
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
-              }}
-            >
-              <Tab.Screen name="Home" component={Home}/>
-              <Tab.Screen name="NewItem" component={NewItem} />
-              <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
-            </Tab.Navigator>
+                      // You can return any component that you like here!
+                      return <Ionicons name={iconName} size={size} color={color} />;
+                  },
+                  })}
+                  tabBarOptions={{
+                  activeTintColor: 'tomato',
+                  inactiveTintColor: 'gray',
+                }}
+              >
+                <Tab.Screen name="Home" component={Home}/>
+                <Tab.Screen name="NewItem" component={NewItem} />
+                <Tab.Screen name="ListItem" component={FirstScreenNavigation} />
+              </Tab.Navigator>
+            )
+            :
+            (
+              <StackApp.Navigator>
+                <StackApp.Screen 
+                  options={{
+                    title: "Login",
+                    headerShown: false
+                  }}
+                  name="Login" 
+                  component={Login} 
+                />
+                <StackApp.Screen 
+                  options={{
+                    title: "Register",
+                    headerShown: false
+                  }}
+                  name="Register" 
+                  component={Register} 
+                />
+                <StackApp.Screen 
+                  options={{
+                    title: "Home",
+                    headerShown: false
+                  }}
+                  name="MainNavigation" 
+                  component={MainNavigation} 
+                />
+              </StackApp.Navigator>
+            )} */}
           </NavigationContainer>
         </>
       )

@@ -3,9 +3,8 @@ import { StyleSheet, Image, Text, View, Platform, TextInput } from 'react-native
 import Icon from '@expo/vector-icons/AntDesign';
 import { SvgCss } from 'react-native-svg';
 
-export default class Login extends React.Component{
+export class RegisterScreen extends React.Component{
     render() {
-        console.log(this);
         const xml = `
             <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="254mm" height="254mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
             viewBox="0 0 25400 25400"
@@ -28,17 +27,13 @@ export default class Login extends React.Component{
             </g>
             </svg>
         `;
-        
         const {navigate} = this.props.navigation;
-
         let imageStyle = '';
-
         if (Platform.OS !== 'web') {
             imageStyle = styles.image_movil
         } else {
             imageStyle = styles.image_web
         }
-        
         return(
             <View style={{backgroundColor:"#FFF", height:"100%"}}>
                 {Platform.OS !== 'web' 
@@ -46,28 +41,25 @@ export default class Login extends React.Component{
                     <SvgCss xml={xml} width="80%" height="100%" style={styles.logo}/>
                 </View>) 
                 : <Image style={imageStyle} source={require('../images/logo.png')}/>}
-                <Text style={styles.title}>Inicio de Sesión</Text>
+                <Text style={styles.title}>Crear cuenta</Text>
                 <Text style={styles.description}>
                     Familia Subias Ortega criando las mejores reces desde 1994
                 </Text>
                 <View style={styles.contenedorIcono}>
-                    <Icon name="mail" color="#00716F" size={24}/>
-                    <TextInput style={styles.styleInput} placeholder="Correo/Usuario"/>
+                    <TextInput style={styles.styleInput} placeholder="Correo" placeholderTextColor="#00716F"/>
                 </View>
                 <View style={styles.contenedorIcono}>
-                    <Icon name="lock" color="#00716F" size={24}/>
-                    <TextInput style={styles.styleInput} placeholder="Contraseña" secureTextEntry/>
+                    <TextInput style={styles.styleInput} placeholder="Contraseña" placeholderTextColor="#00716F" secureTextEntry/>
+                </View>
+                <View style={styles.contenedorIcono}>
+                    <TextInput style={styles.styleInput} placeholder="Confirmar contraseña" placeholderTextColor="#00716F" secureTextEntry/>
                 </View>
                 <View style={styles.cuentaActualContent}>
                     <Text 
                         style={styles.cuentaActualText}
-                        onPress={()=>navigate('MainNavigation')}
-                    >¿Ya tienes una cuenta?</Text>
+                        onPress={()=>navigate('Login')}
+                    >Registrar</Text>
                 </View>
-                <Text 
-                    style={styles.nuevoUsuario}
-                    onPress={()=>navigate('Register')}
-                >Usuario nuevo</Text>
             </View>
         )
     }
@@ -116,21 +108,14 @@ const styles = StyleSheet.create({
         paddingVertical: 2
     },
     image_movil: {
-        flex: 1,
+        width: '100%', 
+        height: '43%'
+    },
+    image_web: {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%', 
-        height: '50%',
-        backgroundColor: '#cfcfcf'
-    },
-    image_web: {
-        flexDirection: 'row',
-        width: '50%',
-        height: '50%',
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        resizeMode:'contain'
+        height: '20%'
     },
     title: {
         alignSelf: 'center',

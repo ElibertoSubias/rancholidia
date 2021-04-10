@@ -37,13 +37,38 @@
 // });
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import Icon from '@expo/vector-icons/AntDesign';
 
-const Home = () => {
+function CustomHeader({title}) {
+    return (
+        <View style={{flexDirection: 'row', height: 50, borderWidth: 1, borderColor: 'red'}}>
+            <View style={{flex: 1, justifyContent: 'center', borderColor: 'red', borderWidth: 1}}>
+                <Icon name="menufold" color="#00716F" size={24}/>
+            </View>
+            <View style={{flex: 1.5, justifyContent: 'center', borderColor: 'red', borderWidth: 1}}>
+                <Text style={{textAlign: 'center'}}>
+                    {title}
+                </Text>
+            </View>
+            <View style={{flex: 1, borderColor: 'red', borderWidth: 1}}></View>
+        </View>
+    )
+}
+
+const Home = ({navigation}) => {
     return ( 
-        <View>
-            <Text style={styles.myText}>Estoy en Home</Text>
-        </View> 
+        <SafeAreaView style={{flex: 1}}>
+            <CustomHeader title='Home'/>
+            <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={styles.myText}>Estoy en Home</Text>
+                <TouchableOpacity
+                    style={{marginTop: 20}}
+                >
+                    Go Home Detail
+                </TouchableOpacity>
+            </View> 
+        </SafeAreaView>
     );
 }
 

@@ -4,7 +4,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import Edit from '../screens/Edit';
 import Home from '../screens/Home';
-import Main from '../screens/Main';
+import Main from '../screens/MainNavigation';
 
 const stackNavigatorOptions = {
     headerShown: false
