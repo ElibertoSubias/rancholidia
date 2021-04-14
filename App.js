@@ -23,9 +23,9 @@ const navOptionHandler = () => ({
 
 function HomeStack() {
   return(
-    <StackHome.Navigator initialRouteName="ItemList">
-      <StackHome.Screen options={navOptionHandler} name="ItemList" component={ListItemScreen}/>
-      <StackHome.Screen options={{headerShown: true, title: 'Editar'}} name="Edit" component={EditScreen}/>
+    <StackHome.Navigator initialRouteName="ListItem">
+      <StackHome.Screen options={{headerShown: false, title: 'Listado'}} name="ListItem" component={ListItemScreen}/>
+      <StackHome.Screen options={{headerShown: true, title: 'Modificar registro'}} name="Edit" component={EditScreen}/>
     </StackHome.Navigator>
   )
 }
@@ -54,9 +54,9 @@ function TabNavigation() {
       inactiveTintColor: 'gray',
     }}
   >
-    <Tab.Screen name="Home" component={HomeScreen}/>
-    <Tab.Screen name="NewItem" component={NewItemScreen} />
-    <Tab.Screen name="ListItem" component={HomeStack} />
+    <Tab.Screen name="Home" options={{headerShown: false, title: 'Inicio'}} component={HomeScreen}/>
+    <Tab.Screen name="NewItem" options={{headerShown: false, title: 'Agregar'}} component={NewItemScreen} />
+    <Tab.Screen name="ListItem" options={{headerShown: false, title: 'Listado'}} component={HomeStack} />
   </Tab.Navigator>
   )
 }
@@ -75,7 +75,11 @@ export default class App extends React.Component {
       'Light' : require('./src/fonts/NotoSansSC-Light.otf'),
       'Medium' : require('./src/fonts/NotoSansSC-Medium.otf'),
       'Regular' : require('./src/fonts/NotoSansSC-Regular.otf'),
-      'Thin' : require('./src/fonts/NotoSansSC-Thin.otf')
+      'Thin' : require('./src/fonts/NotoSansSC-Thin.otf'),
+      'Cinzel' : require('./src/fonts/Cinzel-VariableFont_wght.ttf'),
+      'Cinzel-Bold' : require('./src/fonts/Cinzel-Bold.ttf'),
+      'Cinzel-SemiBold' : require('./src/fonts/Cinzel-SemiBold.ttf'),
+      'Cinzel-Regular' : require('./src/fonts/Cinzel-Regular.ttf'),
     });
     this.setState({isFontLoaded:true})
   }  
@@ -95,15 +99,19 @@ export default class App extends React.Component {
               <StackApp.Screen options={navOptionHandler} name="Edit" component={EditScreen}/>
             </StackApp.Navigator>
           </NavigationContainer>
+          <StatusBar style="dark"/>
         </>
       )
       :
       (
-        <AppLoading
-          startAsync={this._cacheResourcesAsync}
-          onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
-        />
+        <>
+          <AppLoading
+            startAsync={this._cacheResourcesAsync}
+            onFinish={() => this.setState({ isReady: true })}
+            onError={console.warn}
+          />
+          <StatusBar style="dark"/>
+        </>
       )
     );
   }

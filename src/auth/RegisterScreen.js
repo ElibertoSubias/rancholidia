@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View, Platform, TextInput } from 'react-native';
+import { StyleSheet, Image, Text, View, Platform, TextInput, SafeAreaView, ScrollView } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import { SvgCss } from 'react-native-svg';
+import { globalStyles } from '../styles';
 
 export class RegisterScreen extends React.Component{
     render() {
@@ -30,37 +31,50 @@ export class RegisterScreen extends React.Component{
         const {navigate} = this.props.navigation;
         let imageStyle = '';
         if (Platform.OS !== 'web') {
-            imageStyle = styles.image_movil
+            imageStyle = globalStyles.image_movil
         } else {
-            imageStyle = styles.image_web
+            imageStyle = globalStyles.image_web
         }
         return(
-            <View style={{backgroundColor:"#FFF", height:"100%"}}>
-                {Platform.OS !== 'web' 
-                ? (<View style={styles.contenedorLogo}>
-                    <SvgCss xml={xml} width="80%" height="100%" style={styles.logo}/>
-                </View>) 
-                : <Image style={imageStyle} source={require('../images/logo.png')}/>}
-                <Text style={styles.title}>Crear cuenta Tab</Text>
-                <Text style={styles.description}>
-                    Familia Subias Ortega criando las mejores reces desde 1994
-                </Text>
-                <View style={styles.contenedorIcono}>
-                    <TextInput style={styles.styleInput} placeholder="Correo" placeholderTextColor="#00716F"/>
-                </View>
-                <View style={styles.contenedorIcono}>
-                    <TextInput style={styles.styleInput} placeholder="Contraseña" placeholderTextColor="#00716F" secureTextEntry/>
-                </View>
-                <View style={styles.contenedorIcono}>
-                    <TextInput style={styles.styleInput} placeholder="Confirmar contraseña" placeholderTextColor="#00716F" secureTextEntry/>
-                </View>
-                <View style={styles.cuentaActualContent}>
+            <SafeAreaView style={globalStyles.container}>
+                <ScrollView style={globalStyles.scrollView}>
+                <View style={{backgroundColor:"#FFF", height:"100%", marginBottom: 150}}>
+                    <View style={globalStyles.contenedorLogo}>
+                        {Platform.OS !== 'web' 
+                        ? (<>
+                            <SvgCss xml={xml}/>
+                        </>) 
+                        : <Image style={imageStyle} source={require('../images/logo.png')}/>}
+                    </View>
+                    <Text style={globalStyles.titleAuth}>Crear cuenta</Text>
+                    <Text style={globalStyles.descriptionAuth}>
+                        Familia Subias Ortega criando las mejores reces desde 1994
+                    </Text>
+                    <View style={globalStyles.contenedorTextInput}>
+                        <Icon name="mail" color="#FCDB44" size={24}/>
+                        <TextInput style={globalStyles.styleInput} placeholder="Correo" placeholderTextColor="#00716F"/>
+                    </View>
+                    <View style={globalStyles.contenedorTextInput}>
+                    <Icon name="lock" color="#FCDB44" size={24}/>
+                        <TextInput style={globalStyles.styleInput} placeholder="Contraseña" placeholderTextColor="#00716F" secureTextEntry/>
+                    </View>
+                    <View style={globalStyles.contenedorTextInput}>
+                        <Icon name="lock" color="#FCDB44" size={24}/>
+                        <TextInput style={globalStyles.styleInput} placeholder="Confirmar contraseña" placeholderTextColor="#00716F" secureTextEntry/>
+                    </View>
+                    <View style={globalStyles.cuentaActualContent}>
+                        <Text 
+                            style={globalStyles.cuentaActualText}
+                            onPress={()=>navigate('HomeApp')}
+                        >Registrar</Text>
+                    </View>
                     <Text 
-                        style={styles.cuentaActualText}
+                        style={globalStyles.nuevoUsuario}
                         onPress={()=>navigate('Login')}
-                    >Registrar</Text>
+                    >Ya tengo cuenta</Text>
                 </View>
-            </View>
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }

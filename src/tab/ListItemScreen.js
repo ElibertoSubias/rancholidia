@@ -1,9 +1,10 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image, Alert, ScrollView } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
+import { globalStyles } from '../styles';import Constants from 'expo-constants';
 
 const ListItemScreen = ({navigation}) => {
-    const [item, setItem] = useState([
+    const [items, setItem] = useState([
         { numSinniga: '5151515151', edad: 2, sexo: 'H', uri: '../image/cow.jpg'},
         { numSinniga: '1212121212', edad: 1, sexo: 'M', uri: '../image/cow.jpg'},
         { numSinniga: '2121212121', edad: 5, sexo: 'H', uri: '../image/cow.jpg'},
@@ -11,38 +12,39 @@ const ListItemScreen = ({navigation}) => {
         { numSinniga: '1414141414', edad: 4, sexo: 'H', uri: '../image/cow.jpg'},
         { numSinniga: '1919191919', edad: 3, sexo: 'M', uri: '../image/cow.jpg'},
     ]);
+    if (items.length == 0) {
+        Alert('Nada')
+    }
     return (
-        <SafeAreaView>
-            <View  style={{ flex: 1, width: '100%', marginTop: 15}}>
-                <Text style={styles.title}>Listado</Text>
-                <FlatList 
-                    style={{width: '100%'}}
-                    keyExtractor={(item)=> item.numSinniga}
-                    // numColumns={2}
-                    data={item}
-                    renderItem={({ item }) => (
-                        <View style={styles.containerItem}>
-                            <Image style={styles.itemImage} source={require('../images/cow.jpg')}/>
-                            <View style={{height:150, width: '50%'}}>
-                                <View style={{ flex: 4}}>
-                                    <Text style={styles.itemTitle}>Num.: {item.numSinniga}</Text>
-                                    <Text style={styles.itemTitle}>Sexo: {item.sexo}</Text>
-                                    <Text style={styles.itemTitle}>Edad: {item.edad}</Text>
-                                </View>
-                                <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                    <Icon name="delete" color="#00716F" size={24} style={{marginLeft:15}}/>
-                                    <Icon 
-                                        name="edit" 
-                                        color="#00716F" 
-                                        size={24}
-                                        onPress={()=>navigation.navigate('Edit', {item})}
-                                    />
-                                </View>
+        <SafeAreaView style={globalStyles.container}>
+            <Text style={globalStyles.title}>Listado</Text>
+            <FlatList 
+                style={{width: '100%'}}
+                keyExtractor={(items)=> items.numSinniga}
+                // numColumns={2}
+                data={items}
+                renderItem={({ item }) => (
+                    <View style={globalStyles.containerItem}>
+                        <Image style={globalStyles.itemImage} source={require('../images/cow.jpg')}/>
+                        <View style={{height:150, width: '50%'}}>
+                            <View style={{ flex: 4}}>
+                                <Text style={globalStyles.itemTitle}>Num.: {item.numSinniga}</Text>
+                                <Text style={globalStyles.itemTitle}>Sexo: {item.sexo}</Text>
+                                <Text style={globalStyles.itemTitle}>Edad: {item.edad}</Text>
+                            </View>
+                            <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center'}}>
+                                <Icon name="delete" color="#00716F" size={24} style={{marginLeft:15}}/>
+                                <Icon 
+                                    name="edit" 
+                                    color="#00716F" 
+                                    size={24}
+                                    onPress={()=>navigation.navigate('Edit', {item})}
+                                />
                             </View>
                         </View>
-                    )}
-                />
-            </View>
+                    </View>
+                )}
+            />
         </SafeAreaView>
     )
 }

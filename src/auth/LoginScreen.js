@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, Text, View, Platform, TextInput } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import { SvgCss } from 'react-native-svg';
+import { globalStyles } from '../styles';
 
 const xml = `
     <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="254mm" height="254mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
@@ -28,119 +29,44 @@ const xml = `
 
 export class LoginScreen extends React.Component{
     render() {
-        console.log(this)
         const {navigate} = this.props.navigation;
         let imageStyle = '';
 
-if (Platform.OS !== 'web') {
-    imageStyle = styles.image_movil
-} else {
-    imageStyle = styles.image_web
-}
+        if (Platform.OS !== 'web') {
+            imageStyle = globalStyles.image_movil
+        } else {
+            imageStyle = globalStyles.image_web
+        }
         return(
             <View style={{backgroundColor:"#FFF", height:"100%"}}>
                 {Platform.OS !== 'web' 
-                ? (<View style={styles.contenedorLogo}>
-                    <SvgCss xml={xml} width="80%" height="100%" style={styles.logo}/>
+                ? (<View style={globalStyles.contenedorLogoAuth}>
+                    <SvgCss xml={xml} width="80%" height="100%" style={globalStyles.logo}/>
                 </View>) 
                 : <Image style={imageStyle} source={require('../images/logo.png')}/>}
-                <Text style={styles.title}>Inicio de Sesión Tab</Text>
-                <Text style={styles.description}>
+                <Text style={globalStyles.titleAuth}>Inicio de Sesión</Text>
+                <Text style={globalStyles.descriptionAuth}>
                     Familia Subias Ortega criando las mejores reces desde 1994
                 </Text>
-                <View style={styles.contenedorIcono}>
-                    <Icon name="mail" color="#00716F" size={24}/>
-                    <TextInput style={styles.styleInput} placeholder="Correo/Usuario"/>
+                <View style={globalStyles.contenedorTextInput}>
+                    <Icon name="mail" color="#FCDB44" size={24}/>
+                    <TextInput style={globalStyles.styleInput} placeholder="Correo/Usuario"/>
                 </View>
-                <View style={styles.contenedorIcono}>
-                    <Icon name="lock" color="#00716F" size={24}/>
-                    <TextInput style={styles.styleInput} placeholder="Contraseña" secureTextEntry/>
+                <View style={globalStyles.contenedorTextInput}>
+                    <Icon name="lock" color="#FCDB44" size={24}/>
+                    <TextInput style={globalStyles.styleInput} placeholder="Contraseña" secureTextEntry/>
                 </View>
-                <View style={styles.cuentaActualContent}>
+                <View style={globalStyles.cuentaActualContent}>
                     <Text 
-                        style={styles.cuentaActualText}
+                        style={globalStyles.cuentaActualText}
                         onPress={()=>navigate('HomeApp')}
-                    >¿Ya tienes una cuenta?</Text>
+                    >Iniciar Sesión</Text>
                 </View>
                 <Text 
-                    style={styles.nuevoUsuario}
+                    style={globalStyles.nuevoUsuario}
                     onPress={()=>navigate('Register')}
                 >Usuario nuevo</Text>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    logo: {
-        flex: 1
-    },
-    contenedorLogo: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    nuevoUsuario: {
-        alignSelf: 'center',
-        color: '#00716F',
-        fontFamily: 'Bold',
-        paddingVertical: 30,
-    },
-    cuentaActualContent: {
-        marginHorizontal: 55,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30,
-        backgroundColor: '#00716F',
-        paddingVertical: 8,
-        borderRadius: 23
-    },
-    cuentaActualText: {
-        color: 'white',
-        fontFamily: 'Bold'
-    },
-    styleInput: {
-        paddingHorizontal: 10
-    },
-    contenedorIcono: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 55,
-        borderWidth: 2,
-        marginTop: 35,
-        paddingHorizontal: 10,
-        borderColor: '#00716F',
-        borderRadius: 23,
-        paddingVertical: 2
-    },
-    image_movil: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%', 
-        height: '50%',
-        backgroundColor: '#cfcfcf'
-    },
-    image_web: {
-        flexDirection: 'row',
-        width: '50%',
-        height: '50%',
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        resizeMode:'contain'
-    },
-    title: {
-        alignSelf: 'center',
-        fontSize: 28,
-        fontFamily: 'Black'
-    },
-    description: {
-        fontFamily:"Light",
-        marginHorizontal:55,
-        textAlign:'center',
-        marginTop:5,
-        opacity:0.4
-    }
-});
-  

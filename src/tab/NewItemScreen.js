@@ -1,170 +1,101 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Text, TextInput, View, FlatList, SafeAreaView } from 'react-native';
-import Icon from '@expo/vector-icons/AntDesign';
-import {CustomHeader} from '../';
+import { Platform, Image, Text, TextInput, View, Alert, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { globalStyles } from '../styles';import Constants from 'expo-constants';
 
 export class NewItemScreen extends Component {
     render() {
+        function escanearCodigo() {
+            Platform.OS === 'web' ? alert('Abriendo') : Alert.alert(
+                'Aviso',
+                'Abriendo Escaner',
+                [
+                  {text: 'Ask me later', onPress: () => alert('Ask me later pressed')},
+                  {text: 'Cancel', onPress: () => alert('Cancel Pressed'), style: 'cancel'},
+                ],
+                { cancelable: false }
+              )
+        }
+        function buscarFotografia() {
+            Platform.OS === 'web' ? alert('Buscar foto') : Alert.alert(
+                'Aviso',
+                'Buscando Imagen',
+                [
+                  {text: 'Ask me later', onPress: () => alert('Ask me later pressed')},
+                  {text: 'Cancel', onPress: () => alert('Cancel Pressed'), style: 'cancel'},
+                ],
+                { cancelable: false }
+              )
+        }
+        function capturarFotografia() {
+            Platform.OS === 'web' ? alert('Capturar foto') : Alert.alert(
+                'Aviso',
+                'Capturando Imagen',
+                [
+                  {text: 'Ask me later', onPress: () => alert('Ask me later pressed')},
+                  {text: 'Cancel', onPress: () => alert('Cancel Pressed'), style: 'cancel'},
+                ],
+                { cancelable: false }
+              )
+        }
+        function guardar() {
+            Platform.OS === 'web' ? alert('Guardando') : Alert.alert(
+                'Aviso',
+                'Guardado',
+                [
+                  {text: 'Ask me later', onPress: () => alert('Ask me later pressed')},
+                  {text: 'Cancel', onPress: () => alert('Cancel Pressed'), style: 'cancel'},
+                ],
+                { cancelable: false }
+              )
+        }
         return ( 
-            <SafeAreaView>
-                {/* <CustomHeader title='New Item' isHome={true} navigation={this.props.navigation}/> */}
-                <View style={{ flex: 1, marginTop: 15}}>
-                    <Text style={styles.title}>Agregar Ganados</Text>
-                    <View style={styles.contenedorIcono}>
-                        <TextInput style={styles.styleInput} placeholder="Num. sinniga"/>
+            <SafeAreaView style={globalStyles.container}>
+                <ScrollView style={globalStyles.scrollView}>
+                    <Text style={globalStyles.title}>Agregar ganado</Text>
+                    <View style={globalStyles.contenedorTextInput}>
+                        <TextInput style={globalStyles.styleInput} placeholder="Num. sinniga"/>
                     </View>
-                    <View style={styles.cuentaActualContent}>
+                    <View style={globalStyles.cuentaActualContent}>
                         <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
+                            style={globalStyles.cuentaActualText}
+                            onPress={()=>escanearCodigo()}
                         >
                             Escanear Núm. Sinniga
                         </Text>
                     </View>
                     <View style={{height: '30%', justifyContent: 'center', alignItems: 'center', marginTop: 30,}}>
                         <View style={{height: '100%', width: '70%'}}>
-                            <Image style={styles.imagen} source={require('../images/icon_image.jpg')}/>
+                            <Image style={globalStyles.imagen} source={require('../images/icon_image.jpg')}/>
                         </View>
                     </View>
-                    <View style={styles.cuentaActualContent}>
+                    <View style={globalStyles.cuentaActualContent}>
                         <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
+                            style={globalStyles.cuentaActualText}
+                            onPress={()=>buscarFotografia()}
                         >
                             Buscar foto
                         </Text>
                     </View>
-                    <View style={styles.cuentaActualContent}>
+                    <View style={globalStyles.cuentaActualContent}>
                         <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
+                            style={globalStyles.cuentaActualText}
+                            onPress={()=>capturarFotografia()}
                         >
                             Capturar foto
                         </Text>
                     </View>
-                    <View style={styles.cuentaActualContentGuardar}>
+                    <View style={globalStyles.cuentaActualContentGuardar}>
                         <Text 
-                            style={styles.cuentaActualText}
-                            onPress={()=>navigation.navigate('Main')}
+                            style={globalStyles.cuentaActualText}
+                            onPress={()=>guardar()}
                         >
                             Guardar
                         </Text>
                     </View>
-                </View>
+                    <Text style={{marginVertical: 150}}>
+                    </Text>
+                </ScrollView>
             </SafeAreaView>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    containerItem: {
-        flex: 1,
-        flexDirection: 'row',
-        width: '94%',
-        marginTop: 24,
-        padding: 10,
-        backgroundColor: '#dee2dc',
-        borderRadius: 10,
-        marginHorizontal: '3%',
-        marginTop: 24,
-    },
-    container: {
-        flex: 1,
-        paddingTop: 40,
-        paddingHorizontal: 20
-    },
-    itemImage: {
-        width: '50%',
-        height: 150,
-    },
-    itemTitle: {
-        paddingLeft: 10,
-        fontSize: 20,
-    },
-    imagen: {
-        flex: 1,
-        height: '100%',
-        width: '100%',
-        // backgroundColor: 'red',
-        resizeMode: "contain",
-    },
-    logo: {
-        flex: 1
-    },
-    contenedorLogo: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    nuevoUsuario: {
-        alignSelf: 'center',
-        color: '#00716F',
-        fontFamily: 'Bold',
-        paddingVertical: 30,
-    },
-    cuentaActualContent: {
-        marginHorizontal: 55,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30,
-        backgroundColor: '#00716F',
-        paddingVertical: 8,
-        borderRadius: 23
-    },
-    cuentaActualContentGuardar: {
-        marginHorizontal: 55,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30,
-        backgroundColor: '#13b30d',
-        paddingVertical: 8,
-        borderRadius: 23
-    },
-    cuentaActualText: {
-        color: 'white',
-        fontFamily: 'Bold'
-    },
-    styleInput: {
-        paddingHorizontal: 10
-    },
-    contenedorIcono: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 55,
-        borderWidth: 2,
-        marginTop: 35,
-        paddingHorizontal: 10,
-        borderColor: '#00716F',
-        borderRadius: 23,
-        paddingVertical: 2
-    },
-    image_movil: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%', 
-        height: '50%',
-        backgroundColor: '#cfcfcf'
-    },
-    image_web: {
-        flexDirection: 'row',
-        width: '50%',
-        height: '50%',
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        resizeMode:'contain'
-    },
-    title: {
-        alignSelf: 'center',
-        fontSize: 28,
-        fontFamily: 'Black'
-    },
-    description: {
-        fontFamily:"Light",
-        marginHorizontal:55,
-        textAlign:'center',
-        marginTop:5,
-        opacity:0.4
-    }
-});
