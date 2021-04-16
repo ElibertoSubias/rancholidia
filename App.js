@@ -70,16 +70,10 @@ export default class App extends React.Component {
 
   async componentDidMount(){
     await Font.loadAsync({
-      'Black' : require('./src/fonts/NotoSansSC-Black.otf'),
-      'Bold' : require('./src/fonts/NotoSansSC-Bold.otf'),
-      'Light' : require('./src/fonts/NotoSansSC-Light.otf'),
-      'Medium' : require('./src/fonts/NotoSansSC-Medium.otf'),
-      'Regular' : require('./src/fonts/NotoSansSC-Regular.otf'),
-      'Thin' : require('./src/fonts/NotoSansSC-Thin.otf'),
-      'Cinzel' : require('./src/fonts/Cinzel-VariableFont_wght.ttf'),
-      'Cinzel-Bold' : require('./src/fonts/Cinzel-Bold.ttf'),
-      'Cinzel-SemiBold' : require('./src/fonts/Cinzel-SemiBold.ttf'),
-      'Cinzel-Regular' : require('./src/fonts/Cinzel-Regular.ttf'),
+      'Thin' : require('./src/fonts/Montserrat-Thin.ttf'),
+      'Bold' : require('./src/fonts/Montserrat-Bold.ttf'),
+      'SemiBold' : require('./src/fonts/Montserrat-SemiBold.ttf'),
+      'Regular' : require('./src/fonts/Montserrat-Regular.ttf'),
     });
     this.setState({isFontLoaded:true})
   }  
