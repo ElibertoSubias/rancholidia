@@ -28,11 +28,11 @@ const xml = `
 
 export class HomeScreen extends Component {
     render() {
-        let imageStyle = '';
+        let logoStyle = '';
         if (Platform.OS !== 'web') {
-            imageStyle = globalStyles.image_movil
+            logoStyle = globalStyles.logo_movil
         } else {
-            imageStyle = globalStyles.image_web
+            logoStyle = globalStyles.logo_web
         }
         return (
             <SafeAreaView style={globalStyles.container}>
@@ -42,7 +42,7 @@ export class HomeScreen extends Component {
                         ? (<>
                             <SvgCss xml={xml}/>
                         </>) 
-                        : <Image style={imageStyle} source={require('../images/logo.png')}/>}
+                        : <Image style={logoStyle} source={require('../images/logo.png')}/>}
                     </View>
                     <SafeAreaView style={{marginHorizontal: 10}}>
                         <Text style={globalStyles.titulo}>Familia Subias</Text>
@@ -54,11 +54,11 @@ export class HomeScreen extends Component {
                         </Text>
                         <Text style={globalStyles.subTitulo}>Productos</Text>
                         <View style={{flex: 1}}>
-                            <Image source={{uri: 'https://picsum.photos/200/300?random=1'}} style={{width: '100%', height: 200}}/>
+                            <Image source={{uri: 'https://picsum.photos/200/300?random=1'}} style={globalStyles.imgHome}/>
                         </View>
                         <Text style={globalStyles.subTitulo}>Galerias</Text>
                         <View style={{flex: 1}}>
-                            <Image source={{uri: 'https://picsum.photos/200/300?random=2'}} style={{width: '100%', height: 200}}/>
+                            <Image source={{uri: 'https://picsum.photos/200/300?random=2'}} style={globalStyles.imgHome}/>
                         </View>
                     </SafeAreaView>
                 </ScrollView>

@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
-let fontFamilyTitle = 'Cinzel-Bold';
-let fontFamilySubTitle = 'Cinzel';
-let fontFamilyParafo = 'Cinzel-Regular';
+let fontFamilyTitle = 'Bold';
+let fontFamilySubTitle = 'SemiBold';
+let fontFamilyParafo = 'Thin';
 
 export const globalStyles = StyleSheet.create({
     container: {
@@ -46,7 +46,7 @@ export const globalStyles = StyleSheet.create({
         fontFamily: fontFamilySubTitle,
         textAlign: 'justify'
     },
-    image_movil: {
+    logo_movil: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,7 +54,7 @@ export const globalStyles = StyleSheet.create({
         height: '50%',
         backgroundColor: '#cfcfcf'
     },
-    image_web: {
+    logo_web: {
         flexDirection: 'row',
         width: '50%',
         height: '50%',
@@ -154,4 +154,8 @@ export const globalStyles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 20,
     },
+    imgHome: {
+        width: '100%',
+        height: Platform.OS !== 'web' ? 300 : 400
+    }
 });

@@ -30,12 +30,11 @@ const xml = `
 export class LoginScreen extends React.Component{
     render() {
         const {navigate} = this.props.navigation;
-        let imageStyle = '';
-
+        let logoStyle = '';
         if (Platform.OS !== 'web') {
-            imageStyle = globalStyles.image_movil
+            logoStyle = globalStyles.logo_movil
         } else {
-            imageStyle = globalStyles.image_web
+            logoStyle = globalStyles.logo_web
         }
         return(
             <View style={{backgroundColor:"#FFF", height:"100%"}}>
@@ -43,7 +42,7 @@ export class LoginScreen extends React.Component{
                 ? (<View style={globalStyles.contenedorLogoAuth}>
                     <SvgCss xml={xml} width="80%" height="100%" style={globalStyles.logo}/>
                 </View>) 
-                : <Image style={imageStyle} source={require('../images/logo.png')}/>}
+                : <Image style={logoStyle} source={require('../images/logo.png')}/>}
                 <Text style={globalStyles.titleAuth}>Inicio de Sesión</Text>
                 <Text style={globalStyles.descriptionAuth}>
                     Familia Subias Ortega criando las mejores reces desde 1994
