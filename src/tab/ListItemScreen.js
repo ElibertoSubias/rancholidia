@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image, Alert, ScrollView, Platform } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import { globalStyles } from '../styles';import Constants from 'expo-constants';
 
@@ -14,6 +14,19 @@ const ListItemScreen = ({navigation}) => {
     ]);
     if (items.length == 0) {
         Alert('Nada')
+    }
+    function confirmarEliminar() {
+        Platform.OS !== 'web' ? (Alert.alert(
+            'Aviso',
+            '¿Desea eliminar?',
+            [
+              {text: 'Sí', onPress: () => alert('Ask me later pressed')},
+              {text: 'Cancel', onPress: () => alert('Cancel Pressed'), style: 'cancel'},
+            ],
+            { cancelable: false }
+        )) : (
+            alert('Aviso', 'Desea eliminar', ['Sí', 'No'])
+        )
     }
     return (
         <SafeAreaView style={globalStyles.container}>
@@ -33,7 +46,13 @@ const ListItemScreen = ({navigation}) => {
                                 <Text style={globalStyles.itemTitle}>Edad: {item.edad}</Text>
                             </View>
                             <View style={{ flex: 1, flexDirection: 'row-reverse', alignItems: 'center'}}>
-                                <Icon name="delete" color="#00716F" size={24} style={{marginLeft:15}}/>
+                                <Icon 
+                                    name="delete" 
+                                    color="#00716F" 
+                                    size={24} 
+                                    style={{marginLeft:15}}
+                                    onPress={() => confirmarEliminar()}
+                                />
                                 <Icon 
                                     name="edit" 
                                     color="#00716F" 
