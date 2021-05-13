@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Platform, Image } from 'react-native';
+import React, {useState} from 'react';
+import { Button, Image, Text, View, Platform, TextInput, SafeAreaView, ScrollView } from 'react-native';
+import Icon from '@expo/vector-icons/AntDesign';
 import { SvgCss } from 'react-native-svg';
 import { globalStyles } from '../styles';
+import { AuthContext } from "../context/context";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const xml = `
-    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="154mm" height="154mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="254mm" height="254mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     viewBox="0 0 25400 25400"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
@@ -26,43 +29,130 @@ const xml = `
     </svg>
 `;
 
-export class HomeScreen extends Component {
-    render() {
-        let logoStyle = '';
-        if (Platform.OS !== 'web') {
-            logoStyle = globalStyles.logo_movil
-        } else {
-            logoStyle = globalStyles.logo_web
-        }
-        return (
-            <SafeAreaView style={globalStyles.container}>
-                <ScrollView style={globalStyles.scrollView}>
-                    <View style={globalStyles.contenedorLogo}>
-                        {Platform.OS !== 'web' 
-                        ? (<>
-                            <SvgCss xml={xml}/>
-                        </>) 
-                        : <Image style={logoStyle} source={require('../images/logo.png')}/>}
-                    </View>
-                    <SafeAreaView style={{marginHorizontal: 10}}>
-                        <Text style={globalStyles.titulo}>Familia Subias</Text>
-                        <Text style={globalStyles.contenidoText}>
-                            La familia Subias se ha dedicado a la cría de ganado desde la generación de Modesto Subias,
-                            y ahora sus hijos Catarino Subias y Elio Subias continúan con este legado. Buscando siempre 
-                            la cruza con mayor beneficio posible en leche y carne, pero a su vez buscando la resistencia
-                            a los cambios de climas de la región.
-                        </Text>
-                        <Text style={globalStyles.subTitulo}>Productos</Text>
-                        <View style={{flex: 1}}>
-                            <Image source={{uri: 'https://picsum.photos/200/300?random=1'}} style={globalStyles.imgHome}/>
-                        </View>
-                        <Text style={globalStyles.subTitulo}>Galerias</Text>
-                        <View style={{flex: 1}}>
-                            <Image source={{uri: 'https://picsum.photos/200/300?random=2'}} style={globalStyles.imgHome}/>
-                        </View>
-                    </SafeAreaView>
-                </ScrollView>
-            </SafeAreaView>
-        );
+export const LoginScreen = ({ navigation }) => {
+
+    const [error, setError] = React.useState(null);
+    const { signIn } = React.useContext(AuthContext);
+    let logoStyle = '';
+    if (Platform.OS !== 'web') {
+        logoStyle = globalStyles.logo_movil
+    } else {
+        logoStyle = globalStyles.logo_web
     }
+
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@rancho-lidia-123', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+    }
+
+    const validarUsuario = async () => {
+
+        // fetch('http://localhost:3000/api/user/login').then(res => res.json())
+        // .then( res => {
+        //     console.log(res);
+        // });
+        // try {
+        //     const response = await fetch('http://localhost:3000/api/user/login', {
+        //         method: 'POST',
+        //         headers: {
+        //             Accept: 'application/json; charset=utf-8',
+        //             'Content-Type': 'application/json; charset=utf-8'
+        //         },
+        //         body: JSON.stringify({
+        //             email: 'eli@gmail.com',
+        //             password: 'yourOtherValue'
+        //         })
+        //     });
+        //     if (response.status === 200) {
+        //         const token = {token: '123'};
+        //         storeData(token);
+        //         signIn(token);
+        //     } else {
+        //         if (response && response.data) {
+        //             console.log(response.data.message);
+        //         }
+        //     }
+            
+        // }
+        // catch (e) {
+        //     if (e.response && e.response.data) {
+        //         console.log(e.response.data.message);
+        //     }
+        // }
+        fetch('http://192.168.0.5:3000/api/user/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify({ email: 'eli@hotmail.com', password: '654321' }),
+          }).then((response) => {
+            return new Promise((resolve) => response.json()
+              .then((json) => resolve({
+                status: response.status,
+                ok: response.ok,
+                json,
+              })));
+          }).then(({ status, json, ok }) => {
+            const message = json.message;
+            if (status === 200) {
+                const token = {token: '123'};
+                storeData(token);
+                signIn(token);
+            } else {
+                setError(message);
+            }
+            let color = 'black';
+            switch (status) {
+              case 400:
+                color = 'red';
+                break;
+              case 201:
+              case 200:
+                color = 'grey';
+                break;
+              case 500:
+              default:
+                handleUnexpected({ status, json, ok });
+            }
+          })
+    }
+    return(
+        <SafeAreaView style={globalStyles.container}>
+            <ScrollView style={globalStyles.scrollView}>
+                {Platform.OS !== 'web' 
+                ? (<View style={globalStyles.contenedorLogoAuth}>
+                    <SvgCss xml={xml} style={globalStyles.logo}/>
+                </View>) 
+                : <Image style={logoStyle} source={require('../images/logo.png')}/>}
+                <Text style={globalStyles.titleAuth}>Inicio de Sesión</Text>
+                <Text style={globalStyles.descriptionAuth}>
+                    Familia Subias Ortega criando las mejores reces desde 1994
+                </Text>
+                {error ? <Text style={globalStyles.errorText}>{error}</Text> : null}
+                <View style={globalStyles.contenedorTextInput}>
+                    <Icon name="mail" color="#FCDB44" size={24}/>
+                    <TextInput style={globalStyles.styleInput} placeholder="Correo/Usuario"/>
+                </View>
+                <View style={globalStyles.contenedorTextInput}>
+                    <Icon name="lock" color="#FCDB44" size={24}/>
+                    <TextInput style={globalStyles.styleInput} placeholder="Contraseña" secureTextEntry/>
+                </View>
+                <View style={globalStyles.cuentaActualContent}>
+                    <Text 
+                        style={globalStyles.cuentaActualText}
+                        onPress={() => validarUsuario()}
+                    >Iniciar Sesión</Text>
+                </View>
+                <Text 
+                    style={globalStyles.nuevoUsuario}
+                    onPress={() => navigation.push("CreateAccount")}
+                >Usuario nuevo</Text>
+            </ScrollView>
+        </SafeAreaView>
+    )
 }

@@ -8,7 +8,9 @@ let fontFamilyParafo = 'Thin';
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: Constants.statusBarHeight,
+        // marginTop: Constants.statusBarHeight,
+        backgroundColor:"#FFF",
+        height: '100%',
     },
     scrollView: {
     },
@@ -21,12 +23,12 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center'
     },
     contenedorLogoAuth: {
-        flex: 1,
+        // flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     logo: {
-        flex: 1
+        // flex: 1
     },
     titulo: {
         color: 'black',
@@ -56,8 +58,8 @@ export const globalStyles = StyleSheet.create({
     },
     logo_web: {
         flexDirection: 'row',
-        width: '50%',
-        height: '50%',
+        width: '80%',
+        height: '80%',
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -86,7 +88,7 @@ export const globalStyles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 55,
         borderWidth: 2,
-        marginTop: 35,
+        marginTop: 25,
         paddingHorizontal: 10,
         borderColor: '#FCDB44',
         borderRadius: 23,
@@ -102,9 +104,19 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 23
     },
     cuentaActualText: {
+        width: '100%',
+        textAlign: 'center',
         fontSize: 18,
         color: 'black',
         fontFamily: fontFamilySubTitle,
+    },
+    errorText: {
+        margin: 0,
+        marginTop: 10,
+        alignSelf: 'center',
+        color: 'red',
+        fontFamily: fontFamilySubTitle,
+        padding: 0,
     },
     styleInput: {
         fontFamily: fontFamilySubTitle,

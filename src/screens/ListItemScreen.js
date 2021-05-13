@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image
 import Icon from '@expo/vector-icons/AntDesign';
 import { globalStyles } from '../styles';import Constants from 'expo-constants';
 
-const ListItemScreen = ({navigation}) => {
+export const ListItemScreen = ({navigation}) => {
     const [items, setItem] = useState([
         { numSinniga: '5151515151', edad: 2, sexo: 'H', uri: '../image/cow.jpg'},
         { numSinniga: '1212121212', edad: 1, sexo: 'M', uri: '../image/cow.jpg'},
@@ -30,7 +30,7 @@ const ListItemScreen = ({navigation}) => {
     }
     return (
         <SafeAreaView style={globalStyles.container}>
-            <Text style={globalStyles.title}>Listado</Text>
+            {/* <Text style={globalStyles.title}>Listado</Text> */}
             <FlatList 
                 style={{width: '100%'}}
                 keyExtractor={(items)=> items.numSinniga}
@@ -67,9 +67,6 @@ const ListItemScreen = ({navigation}) => {
         </SafeAreaView>
     )
 }
-
-export default ListItemScreen;
-
 
 const styles = StyleSheet.create({
     containerItem: {

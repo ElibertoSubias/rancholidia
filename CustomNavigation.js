@@ -37,7 +37,7 @@ const SecondScreenNavigation = () => {
         <Stack.Navigator>
             <Stack.Screen
                 options={{
-                    title: "Login",
+                    title: "Loginn",
                     headerShown: false
                 }}
                 name="Login"

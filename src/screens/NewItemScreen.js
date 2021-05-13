@@ -51,7 +51,7 @@ export class NewItemScreen extends Component {
         return ( 
             <SafeAreaView style={globalStyles.container}>
                 <ScrollView style={globalStyles.scrollView}>
-                    <Text style={globalStyles.title}>Agregar ganado</Text>
+                    {/* <Text style={globalStyles.title}>Agregar ganado</Text> */}
                     <View style={globalStyles.contenedorTextInput}>
                         <TextInput style={globalStyles.styleInput} placeholder="Num. sinniga"/>
                     </View>
